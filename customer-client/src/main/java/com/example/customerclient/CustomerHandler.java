@@ -1,5 +1,6 @@
 package com.example.customerclient;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -17,9 +18,9 @@ public class CustomerHandler {
     }
 
     public Mono<ServerResponse> getCustomers(ServerRequest request) {
-        Flux<String> customers = customerClient.getAllCustomers()
-                .map(customer -> customer.getFirstName() + " " + customer.getLastName());
+        Flux<CustomerName> customers = customerClient.getAllCustomers()
+                .map(customer -> new CustomerName(customer.getFirstName() + " " + customer.getLastName()));
 
-        return ServerResponse.ok().body(BodyInserters.fromPublisher(customers, String.class));
+        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(BodyInserters.fromPublisher(customers, CustomerName.class));
     }
 }
