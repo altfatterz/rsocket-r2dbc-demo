@@ -1,2 +1,6 @@
 server:
-  port: 8080
+  port: 8081
+
+logging.level:
+  io.r2dbc.postgresql: debug
+  io.rsocket: debug
