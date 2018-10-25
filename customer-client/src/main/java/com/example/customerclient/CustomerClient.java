@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.rsocket.Payload;
 import io.rsocket.RSocketFactory;
 import io.rsocket.transport.netty.client.TcpClientTransport;
+import io.rsocket.transport.netty.client.WebsocketClientTransport;
 import io.rsocket.util.DefaultPayload;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
@@ -23,6 +24,7 @@ public class CustomerClient {
 
         return RSocketFactory
                 .connect()
+                //.transport(WebsocketClientTransport.create("localhost", 8787))
                 .transport(TcpClientTransport.create("localhost", 8787))
                 .start()
                 .flatMapMany(socket ->

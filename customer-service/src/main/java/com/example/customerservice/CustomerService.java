@@ -3,6 +3,7 @@ package com.example.customerservice;
 import io.rsocket.RSocketFactory;
 import io.rsocket.SocketAcceptor;
 import io.rsocket.transport.netty.server.TcpServerTransport;
+import io.rsocket.transport.netty.server.WebsocketServerTransport;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,7 @@ public class CustomerService implements ApplicationListener<ApplicationReadyEven
         RSocketFactory
                 .receive()
                 .acceptor(sa)
+                //.transport(WebsocketServerTransport.create("localhost", 8787))
                 .transport(TcpServerTransport.create("localhost", 8787))
                 .start()
                 .onTerminateDetach()
